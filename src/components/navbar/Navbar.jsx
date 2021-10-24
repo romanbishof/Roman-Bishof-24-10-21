@@ -14,7 +14,7 @@ const Navbar = () => {
 
                 <div className="right">
                     <HomeRounded className="homePage"/>
-                    <span>Favorites</span>
+                    <button className="favorites">Favorites</button>
                 </div>
 
             </div>
