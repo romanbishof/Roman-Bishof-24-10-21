@@ -1,22 +1,26 @@
-import {createSlice} from '@reduxjs/toolkit'
-import axios from 'axios'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+// import axios from 'axios'
+
+// export const fetchWeatherAction = createAsyncThunk(
+//     'weather/fetch', 
+//     async () => {
+        
+//     } 
+// )
 
 const initialState = {
-    forcast : []
-
+    forcast : [],
+    favorites: []
 }
 
 export const weatherSlice = createSlice({
     name: "weatherForcast",
     initialState,
     reducers: {
-        getForcast:(state, action) => {
-            
-            action.payload.DailyForecasts.forEach(day => {
-                console.log(day);
-            })
-            
-
+        getForcast:(state, action) => { 
+            // console.log(action.payload)
+            state.forcast = action.payload
+            // console.log(state.forcast)
         }
     }
     

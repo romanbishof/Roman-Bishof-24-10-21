@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Forcast from '../forcast/Forcast';
+import React, { useEffect, useState } from 'react';
+// import Forcast from '../forcast/Forcast';
 import axios from "axios"
 import { getForcast } from '../../redux/slice/weatherSlice';
 import { useDispatch} from 'react-redux'
@@ -10,22 +10,51 @@ const SearchBar = () => {
     const [location, setLocation] = useState('');
     const [data, setData] = useState([])
     const dispatch = useDispatch()
+
+    const defaultCity =  "tel-aviv"
     
     const getWeatherByLocation = async (location) => {
         let response = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7&q=${location}`)
         let objArray = response.data
+        // console.log(objArray);
         objArray.forEach(async (obj) => {
             // console.log(obj.Key);
             let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7`)
             let weather = res.data
-            dispatch(getForcast(weather))
-            console.log(weather);
-            
+            // console.log(weather);
+            let weatherData = {
+                cityKey: obj.Key,
+                weatherCategory: weather.Headline.Category,
+                weatherMood: weather.Headline.Text,
+                country: obj.Country.LocalizedName,
+                cityName: obj.LocalizedName,
+                forcast: weather.DailyForecasts
+            }
+            dispatch(getForcast(weatherData))
+            // console.log(weather); 
         })
-        
-        
-        
+
     }
+
+    useEffect( async() => {
+        let res = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7&q=${defaultCity}`)
+        let defaultWeather = res.data
+        defaultWeather.forEach(async (obj) => {
+            let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7`)
+            let weather = res.data
+            let weatherData = {
+                cityKey: obj.Key,
+                weatherCategory: weather.Headline.Category,
+                weatherMood: weather.Headline.Text,
+                country: obj.Country.LocalizedName,
+                cityName: obj.LocalizedName,
+                forcast: weather.DailyForecasts
+            }
+            dispatch(getForcast(weatherData))
+
+        })
+    },[])
+
 
     const onsubmit = (e) => {
         e.preventDefault()
@@ -34,26 +63,9 @@ const SearchBar = () => {
         }
         else{
             getWeatherByLocation(location)
-            
-            // dispatch(getForcast(location))
         }
     }
 
-    // console.log(data.DailyForecasts); array of 5 days
-
-    // let forcast = data.DailyForecasts.map((day, index) => {
-
-    //     return(
-    //         <li key={index}>
-    //             {day.Date} <br />
-    //             {day.Temperature.Maximum.Value} <br />
-                
-    //         </li>
-    //     )
-    // })
-
-
-    
     return (
         <div className="search">
             <form className="container" onSubmit={onsubmit}>
@@ -63,13 +75,6 @@ const SearchBar = () => {
                 onChange={e=> setLocation(e.target.value)}/>
                 <button className="button" onClick={onsubmit}>SEARCH</button>
             </form>
-
-            <div className="forcast">
-                
-                <Forcast/>
-
-            </div>
-
         </div>
     );
 };
