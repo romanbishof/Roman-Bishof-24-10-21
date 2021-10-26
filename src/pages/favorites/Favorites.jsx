@@ -1,9 +1,14 @@
 import React from 'react';
-import './favorites.scss'
+import Navbar from '../../components/navbar/Navbar';
+import List from'../../components/list/List'
 
 const Favorites = () => {
+
+    
     return (
-        <div>
+        <div className="Favorites">
+            <Navbar/>
+            <List/>
             
         </div>
     );

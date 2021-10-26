@@ -1,8 +1,13 @@
 import { FavoriteBorder, LocationCity } from '@material-ui/icons';
 import React from 'react';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { addToFavorites } from '../../redux/slice/weatherSlice';
+
 
 const Forcast = () => {
+
+    const dispatch = useDispatch()
 
     const weatherData = useSelector((state) => state.weatherForcast)
     console.log(weatherData);
@@ -15,14 +20,16 @@ const Forcast = () => {
         return `${day} ${date} ` 
     }
 
-    const addFavorite = () => {
-        console.log("lest say added");
+    const addFavorite = (payload) => {
+        dispatch(addToFavorites(payload))
+        console.log("added to favorites");
+
     }
 
     let listForcast;
     try {
         listForcast = weatherData.forcast.forcast.map((day, index) =>{
-            console.log(day);
+            
             return(
                 <div key={index}>
                     {dateBuilder(new Date(day.Date))}
@@ -44,7 +51,9 @@ const Forcast = () => {
                 {weatherData.forcast.cityName}
             </div>
             <div className="right">
-                <FavoriteBorder className="favorite" onClick = {addFavorite}/>
+                <FavoriteBorder className="favorite" onClick = {() => {
+                    addFavorite(weatherData.forcast)
+                }}/>
             </div>
             
             {listForcast}

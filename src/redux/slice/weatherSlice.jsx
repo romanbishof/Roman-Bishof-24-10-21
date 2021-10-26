@@ -1,12 +1,4 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-// import axios from 'axios'
-
-// export const fetchWeatherAction = createAsyncThunk(
-//     'weather/fetch', 
-//     async () => {
-        
-//     } 
-// )
 
 const initialState = {
     forcast : [],
@@ -21,11 +13,14 @@ export const weatherSlice = createSlice({
             // console.log(action.payload)
             state.forcast = action.payload
             // console.log(state.forcast)
+        },
+        addToFavorites:(state, action) => {
+            state.favorites.push(action.payload)
         }
     }
     
 })
 
-export const {getForcast} = weatherSlice.actions
+export const {getForcast, addToFavorites} = weatherSlice.actions
 
 export default weatherSlice.reducer

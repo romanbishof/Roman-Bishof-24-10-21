@@ -8,7 +8,7 @@ import './searchBar.scss'
 const SearchBar = () => {
 
     const [location, setLocation] = useState('');
-    const [data, setData] = useState([])
+    
     const dispatch = useDispatch()
 
     const defaultCity =  "tel-aviv"

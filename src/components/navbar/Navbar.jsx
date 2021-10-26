@@ -1,6 +1,7 @@
 import React from 'react';
 import './navbar.scss'
 import {HomeRounded} from '@material-ui/icons';
+import {Link} from 'react-router-dom'
 
 
 const Navbar = () => {
@@ -13,8 +14,13 @@ const Navbar = () => {
                 </div>
 
                 <div className="right">
-                    <HomeRounded className="homePage"/>
-                    <button className="favorites">Favorites</button>
+                    <Link to="/">
+                        <HomeRounded className="homePage"/>
+                    </Link>
+                    
+                    <Link to="/favorietes">
+                        <button className="favorites">Favorites</button>
+                    </Link>
                 </div>
 
             </div>
