@@ -50,6 +50,7 @@ const SearchBar = () => {
                 cityName: obj.LocalizedName,
                 forcast: weather.DailyForecasts
             }
+
             dispatch(getForcast(weatherData))
 
         })
