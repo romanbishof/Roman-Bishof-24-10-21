@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { addToFavorites, removeFromFavorites } from '../../redux/slice/weatherSlice';
-
+import './forcast.scss'
 
 const Forcast = () => {
 
@@ -32,7 +32,7 @@ const Forcast = () => {
         listForcast = weatherData.forcast.forcast.map((day, index) =>{
             
             return(
-                <div key={index}>
+                <div className="forcastDay" key={index}>
                     {dateBuilder(new Date(day.Date))}
                     {day.Day.IconPhrase} {day.Temperature.Maximum.Value} {day.Temperature.Maximum.Unit}
                 </div>
@@ -47,20 +47,22 @@ const Forcast = () => {
     
     return (
         <div className="Forcast">
-            <div className="left">
-                <LocationCity className="cityIcon"/>
-                {weatherData.forcast.cityName}
-            </div>
-            <div className="right">
-                <FavoriteBorder className="favorite" onClick = {() => {
-                    
-                    if (!weatherData.favorites.some(alreadyFavorite => alreadyFavorite.cityKey === weatherData.forcast.cityKey)) {
-                        addFavorite(weatherData.forcast)
-                    } else {
-                        removeFavoriteLocation(weatherData.forcast.cityKey)
-                    }
-                    
-                }}/>
+            <div className="wrapper">
+                <div className="left">
+                    <LocationCity className="cityIcon"/>
+                    {weatherData.forcast.cityName}
+                </div>
+                <button className="right">
+                    <FavoriteBorder className="favorite" onClick = {() => {
+                        
+                        if (!weatherData.favorites.some(alreadyFavorite => alreadyFavorite.cityKey === weatherData.forcast.cityKey)) {
+                            addFavorite(weatherData.forcast)
+                        } else {
+                            removeFavoriteLocation(weatherData.forcast.cityKey)
+                        }
+                        
+                    }}/>
+                </button>
             </div>
             
             {listForcast}

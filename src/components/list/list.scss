@@ -1,9 +1,10 @@
 .list{
+    // background-color: black;
     display: flex;
-    align-items: center;
-    top: 50px;
     .container{
-        background-color: wheat;
-        margin-top: 200px;
+        background-color: red;
+        li{
+            display: inline;
+        }
     }
 }

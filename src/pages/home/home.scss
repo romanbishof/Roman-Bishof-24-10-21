@@ -1,4 +1,9 @@
 .Home{
     // background-color: var(--main-color);
+    background-image: url('https://source.unsplash.com/1600x900/?weather');
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     overflow: hidden;
 }

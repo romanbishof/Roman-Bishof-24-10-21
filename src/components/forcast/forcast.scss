@@ -1,15 +1,56 @@
 .Forcast{
-   background-color: black;
    display: flex;
+   background-color: black;
    align-items: center;
-   justify-content: space-between;
-   margin: 5rem;
-   .left{
+   flex-direction: column;
+   padding: 6em;
+   width: 100%;
+   max-width: 350px;
+   margin: auto;
+   border-radius: 30px;
+   background: #292929d0;
+   .wrapper{
       display: flex;
+      justify-content: space-around;
+      width: 100%;
+      // align-items: center;
       align-items: center;
+      .left{
+         font-size: 40px;
+         color: white;
+         display: flex;
+         justify-content: baseline;
+         .cityIcon{
+            display: flex;
+            position: relative;
+            padding-right: 10px;
+            font-size: 50px;
+         }
+         
+      }
+   
+      .right{
+         // background-color: blue;
+         margin-top: 4px;
+         display: flex;
+      }
    }
 
-   .right{
+   .forcastDay{
+      position: relative;
+      align-self: center;
       display: flex;
+      padding: 1.2em;
+      margin: 1em;
+      justify-content: center;
+      top: 80px;
+      background-color: rgb(215, 122, 228);
+      border-radius: 30px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0px 2px 10px;
+
+
+      
    }
 }
