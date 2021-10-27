@@ -1,9 +1,11 @@
 .search{
-    height: 35vh;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // gap: 2.5rem;
+    margin: auto;
     
     .container{
-        position: absolute;
         top: 100px;
         left: 50px;
         display: flex;

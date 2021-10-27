@@ -35,26 +35,29 @@ const SearchBar = () => {
         })
 
     }
-
-    useEffect( async() => {
+    const defaultFunc =async () =>{
         let res = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7&q=${defaultCity}`)
-        let defaultWeather = res.data
-        defaultWeather.forEach(async (obj) => {
-            let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7`)
-            let weather = res.data
-            let weatherData = {
-                cityKey: obj.Key,
-                weatherCategory: weather.Headline.Category,
-                weatherMood: weather.Headline.Text,
-                country: obj.Country.LocalizedName,
-                cityName: obj.LocalizedName,
-                forcast: weather.DailyForecasts
-            }
+    let defaultWeather = res.data
+    defaultWeather.forEach(async (obj) => {
+        let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7`)
+        let weather = res.data
+        let weatherData = {
+            cityKey: obj.Key,
+            weatherCategory: weather.Headline.Category,
+            weatherMood: weather.Headline.Text,
+            country: obj.Country.LocalizedName,
+            cityName: obj.LocalizedName,
+            forcast: weather.DailyForecasts
+        }
 
-            dispatch(getForcast(weatherData))
+        dispatch(getForcast(weatherData))
 
-        })
-    },[])
+    })
+    }
+    useEffect( () => {
+        defaultFunc();
+        
+    },[dispatch])
 
 
     const onsubmit = (e) => {

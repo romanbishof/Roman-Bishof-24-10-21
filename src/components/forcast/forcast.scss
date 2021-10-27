@@ -1,6 +1,15 @@
 .Forcast{
-   display: inline-block;
-   
    background-color: black;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin: 5rem;
+   .left{
+      display: flex;
+      align-items: center;
+   }
 
+   .right{
+      display: flex;
+   }
 }

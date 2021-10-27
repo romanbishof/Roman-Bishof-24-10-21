@@ -2,7 +2,7 @@ import { FavoriteBorder, LocationCity } from '@material-ui/icons';
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { addToFavorites } from '../../redux/slice/weatherSlice';
+import { addToFavorites, removeFromFavorites } from '../../redux/slice/weatherSlice';
 
 
 const Forcast = () => {
@@ -24,6 +24,9 @@ const Forcast = () => {
         dispatch(addToFavorites(payload))
         console.log("added to favorites");
 
+    }
+    const removeFavoriteLocation = (key) => {
+        dispatch(removeFromFavorites(key))
     }
 
     let listForcast;
@@ -52,7 +55,13 @@ const Forcast = () => {
             </div>
             <div className="right">
                 <FavoriteBorder className="favorite" onClick = {() => {
-                    addFavorite(weatherData.forcast)
+                    
+                    if (!weatherData.favorites.some(alreadyFavorite => alreadyFavorite.cityKey === weatherData.forcast.cityKey)) {
+                        addFavorite(weatherData.forcast)
+                    } else {
+                        removeFavoriteLocation(weatherData.forcast.cityKey)
+                    }
+                    
                 }}/>
             </div>
             
