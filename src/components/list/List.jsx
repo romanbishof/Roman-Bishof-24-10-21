@@ -1,6 +1,7 @@
 // import axios from 'axios';
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux'
+import { Link } from 'react-router-dom';
 import {removeFromFavorites} from '../../redux/slice/weatherSlice'
 
 const List = () => {
@@ -13,22 +14,28 @@ const List = () => {
     const removeFavoriteLocation = (key) => {
         dispatch(removeFromFavorites(key))
     }
+    
+    const goToForcast = (cityName) => {
+        localStorage.setItem("cityName", `${cityName}`)
+    }
+
 
     let favorite = favoritesWeatherLocation.map((locationObj, index) => {
         console.log(locationObj);
-        // let response = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationObj.cityKey}?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7`)
-        // let currentWeather = response.data
-        // console.log(currentWeather[0]);
-        
         
         return (
-            <li key={index} >
-                {locationObj.cityName} <br />
-                {locationObj.forcast[0].Day.IconPhrase} <br />
-                {locationObj.forcast[0].Temperature.Maximum.Value}
-                {locationObj.forcast[0].Temperature.Maximum.Unit} <br />
+            <div key={index} onClick={()=> {goToForcast(locationObj.cityName)}}>
+                <Link to="/">
+                    <li>
+                        {locationObj.cityName} <br />
+                        {locationObj.forcast[0].Day.IconPhrase} <br />
+                        {locationObj.forcast[0].Temperature.Maximum.Value}
+                        {locationObj.forcast[0].Temperature.Maximum.Unit} <br />
+                    </li>
+                </Link>
                 <button onClick={()=>{ removeFavoriteLocation(locationObj.cityKey)} }>Remove from Favorites</button>
-            </li>
+
+            </div>
         )
     })
 

@@ -15,9 +15,10 @@ export const weatherSlice = createSlice({
             // console.log(state.forcast)
         },
         addToFavorites:(state, action) => {
-
+            
             if(!state.favorites.some(alreadyFavorite => alreadyFavorite.cityKey === action.payload.cityKey)){
-                state.favorites.push(action.payload)
+                let newPayload = {...action.payload, special: true}
+                state.favorites.push(newPayload);
             }
         },
         removeFromFavorites:(state, action) => {

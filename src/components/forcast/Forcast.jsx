@@ -1,5 +1,5 @@
 import { FavoriteBorder, LocationCity } from '@material-ui/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { addToFavorites, removeFromFavorites } from '../../redux/slice/weatherSlice';
@@ -8,9 +8,9 @@ import { addToFavorites, removeFromFavorites } from '../../redux/slice/weatherSl
 const Forcast = () => {
 
     const dispatch = useDispatch()
-
     const weatherData = useSelector((state) => state.weatherForcast)
-    console.log(weatherData);
+    // console.log(weatherData);
+
     const dateBuilder = (d) => {
         let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
@@ -22,8 +22,6 @@ const Forcast = () => {
 
     const addFavorite = (payload) => {
         dispatch(addToFavorites(payload))
-        console.log("added to favorites");
-
     }
     const removeFavoriteLocation = (key) => {
         dispatch(removeFromFavorites(key))

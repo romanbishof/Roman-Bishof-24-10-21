@@ -11,7 +11,7 @@ const SearchBar = () => {
     
     const dispatch = useDispatch()
 
-    const defaultCity =  "tel-aviv"
+    const defaultCity = "tel-aviv"
     
     const getWeatherByLocation = async (location) => {
         let response = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7&q=${location}`)
@@ -23,6 +23,7 @@ const SearchBar = () => {
             let weather = res.data
             // console.log(weather);
             let weatherData = {
+                special: false,
                 cityKey: obj.Key,
                 weatherCategory: weather.Headline.Category,
                 weatherMood: weather.Headline.Text,
@@ -42,6 +43,7 @@ const SearchBar = () => {
         let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7`)
         let weather = res.data
         let weatherData = {
+            special: false,
             cityKey: obj.Key,
             weatherCategory: weather.Headline.Category,
             weatherMood: weather.Headline.Text,
@@ -54,8 +56,44 @@ const SearchBar = () => {
 
     })
     }
+
+    const getWeatherByCity = async () => {
+        let cityName = localStorage.getItem('cityName')
+        console.log(cityName);
+        let response = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7&q=${cityName}`)
+        let objArray = response.data
+        // console.log(objArray);
+        objArray.forEach(async (obj) => {
+            // console.log(obj.Key);
+            let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=QJBO7cVITzwME3T85j5VUTQyiwFAlzs7`)
+            let weather = res.data
+            // console.log(weather);
+            let weatherData = {
+                special: true,
+                cityKey: obj.Key,
+                weatherCategory: weather.Headline.Category,
+                weatherMood: weather.Headline.Text,
+                country: obj.Country.LocalizedName,
+                cityName: obj.LocalizedName,
+                forcast: weather.DailyForecasts
+            }
+            dispatch(getForcast(weatherData))
+        })
+
+        localStorage.removeItem('cityName')
+           
+    }
+        
+
     useEffect( () => {
-        defaultFunc();
+        let temp =  localStorage.getItem("cityName")
+        console.log(temp);
+        if (!temp) {
+            defaultFunc();
+            
+        } else {
+            getWeatherByCity()
+        }
         
     },[dispatch])
 
