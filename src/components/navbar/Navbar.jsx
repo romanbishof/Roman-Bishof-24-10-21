@@ -10,7 +10,7 @@ const Navbar = () => {
             <div className="container">
                 <div className="left">
                     <img src="https://blog.herolo.co.il/wp-content/uploads/Herolo_Logo.png" 
-                    alt=''/>
+                    alt='Logo'/>
                 </div>
 
                 <div className="right">

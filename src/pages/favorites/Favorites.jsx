@@ -10,7 +10,6 @@ const Favorites = () => {
         <div className="Favorites">
             <Navbar/>
             <List/>
-
         </div>
     );
 };

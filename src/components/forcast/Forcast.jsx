@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { addToFavorites, removeFromFavorites } from '../../redux/slice/weatherSlice';
 import './forcast.scss'
 
+
 const Forcast = () => {
 
     const dispatch = useDispatch()
@@ -29,8 +30,7 @@ const Forcast = () => {
 
     let listForcast;
     try {
-        listForcast = weatherData.forcast.forcast.map((day, index) =>{
-            
+        listForcast = weatherData.forcast.forcast.map((day, index) =>{  
             return(
                 <div className="forcastDay" key={index}>
                     {dateBuilder(new Date(day.Date))}
