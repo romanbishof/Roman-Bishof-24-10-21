@@ -10,7 +10,6 @@ const Forcast = () => {
 
     const dispatch = useDispatch()
     const weatherData = useSelector((state) => state.weatherForcast)
-    // console.log(weatherData);
     const dateBuilder = (d) => {
         let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
