@@ -1,5 +1,5 @@
 import { FavoriteBorder, LocationCity } from '@material-ui/icons';
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { addToFavorites, removeFromFavorites } from '../../redux/slice/weatherSlice';
@@ -11,7 +11,6 @@ const Forcast = () => {
     const dispatch = useDispatch()
     const weatherData = useSelector((state) => state.weatherForcast)
     // console.log(weatherData);
-
     const dateBuilder = (d) => {
         let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
@@ -22,6 +21,7 @@ const Forcast = () => {
     }
 
     const addFavorite = (payload) => {
+        console.log(payload);
         dispatch(addToFavorites(payload))
     }
     const removeFavoriteLocation = (key) => {
@@ -30,14 +30,44 @@ const Forcast = () => {
 
     let listForcast;
     try {
-        listForcast = weatherData.forcast.forcast.map((day, index) =>{  
+
+        listForcast = weatherData.forcast.map((cityForcast, index) => {
+
             return(
-                <div className="forcastDay" key={index}>
-                    {dateBuilder(new Date(day.Date))}
-                    {day.Day.IconPhrase} {day.Temperature.Maximum.Value} {day.Temperature.Maximum.Unit}
+                <div className="wrapper" key={index}>
+                    <div className="name">
+                        <LocationCity className="cityIcon"/>
+                        {cityForcast.cityName}
+                    </div>
+
+                    <button className="button">
+                        <FavoriteBorder className="favorite" onClick={() => {
+
+                            if (!weatherData.favorites.some(alreadyFavorite => alreadyFavorite.cityKey === weatherData.forcast.cityKey)) {
+                                console.log(weatherData.forcast[index]);
+                                addFavorite(weatherData.forcast[index])
+                            } else {
+                                removeFavoriteLocation(weatherData.forcast.cityKey)
+                            }
+
+                        }}/>
+                    </button>
+
+                    {cityForcast.forcast.map((day, index) => {
+                        return(
+
+                            <div className="forcastDay" key={index}>
+                                {dateBuilder(new Date(day.Date))}
+                                {day.Day.IconPhrase} {day.Temperature.Maximum.Value} {day.Temperature.Maximum.Unit}
+                            </div>
+
+                        )
+                    })}
                 </div>
             )
+        
         })
+
     } catch (error) {
         setTimeout(() => {
             console.log("loading data");
@@ -47,24 +77,6 @@ const Forcast = () => {
     
     return (
         <div className="Forcast">
-            <div className="wrapper">
-                <div className="left">
-                    <LocationCity className="cityIcon"/>
-                    {weatherData.forcast.cityName}
-                </div>
-                <button className="right">
-                    <FavoriteBorder className="favorite" onClick = {() => {
-                        
-                        if (!weatherData.favorites.some(alreadyFavorite => alreadyFavorite.cityKey === weatherData.forcast.cityKey)) {
-                            addFavorite(weatherData.forcast)
-                        } else {
-                            removeFavoriteLocation(weatherData.forcast.cityKey)
-                        }
-                        
-                    }}/>
-                </button>
-            </div>
-            
             {listForcast}
         </div>
     );

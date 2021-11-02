@@ -1,52 +1,51 @@
 .Forcast{
    display: flex;
-   background-color: black;
-   align-items: center;
-   flex-direction: column;
-   padding: 6em;
    width: 100%;
-   max-width: 350px;
    margin: auto;
-   border-radius: 30px;
-   background: #292929d0;
+   padding: 10px 5px;
+   flex-direction: column;
+
    .wrapper{
       display: flex;
-      justify-content: space-around;
-      width: 100%;
-      align-items: center;
-      .left{
-         font-size: 40px;
-         color: white;
+      justify-content: space-between;
+      background-color: rgb(226, 215, 215, 0.7);
+      margin: 10px 20px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      
+      .name{
          display: flex;
-         justify-content: baseline;
+         font-size: 40px;
+         font-weight: 600;
          .cityIcon{
             display: flex;
             position: relative;
-            padding-right: 10px;
+            padding: 10px;
             font-size: 50px;
+            margin-bottom: 10px;
          }
+
+      }
+      .button{
+         display: flex;
+         margin: 20px;
+         border: none;
+         border-radius: 30px;
+         padding: 10px;
+         box-shadow: 0px 2px 10px;
+         cursor: pointer;
+
+      }
+      .forcastDay{
+         display: flex;
+         flex-direction: column;
+         background-color: blueviolet;
+         box-shadow: 0px 2px 10px;
+         border-radius: 30px;
+         padding: 10px 15px;
+         width: 100%;
+         font-weight: 500;
          
       }
-   
-      .right{
-         margin-top: 4px;
-         display: flex;
-      }
-   }
-
-   .forcastDay{
-      position: relative;
-      align-self: center;
-      display: flex;
-      padding: 1.2em;
-      margin: 1em;
-      justify-content: center;
-      top: 80px;
-      background-color: rgb(215, 122, 228);
-      border-radius: 30px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0px 2px 10px;
-      font-weight: 600;
    }
 }

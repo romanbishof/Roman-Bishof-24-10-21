@@ -9,7 +9,8 @@ const List = () => {
     const dispatch = useDispatch()
 
     const favoritesWeatherLocation = useSelector((state) => state.weatherForcast.favorites)
-
+    console.log(favoritesWeatherLocation);
+    
     const removeFavoriteLocation = (key) => {
         dispatch(removeFromFavorites(key))
     }
@@ -19,6 +20,7 @@ const List = () => {
     }
 
     let favorite = favoritesWeatherLocation.map((locationObj, index) => {
+        console.log(locationObj);
         
         return (
             <div className="item" key={index} onClick={()=> {goToForcast(locationObj.cityName)}}>

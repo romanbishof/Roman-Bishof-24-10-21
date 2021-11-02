@@ -10,9 +10,10 @@ export const weatherSlice = createSlice({
     initialState,
     reducers: {
         getForcast:(state, action) => { 
-            // console.log(action.payload)
-            state.forcast = action.payload
-            // console.log(state.forcast)
+            if(!state.forcast.some(alreadyForcast => alreadyForcast.cityKey === action.payload.cityKey)){
+                let newPayload = {...action.payload, special: false}
+                state.forcast.push(newPayload);
+            }
         },
         addToFavorites:(state, action) => {
             
@@ -24,11 +25,15 @@ export const weatherSlice = createSlice({
         removeFromFavorites:(state, action) => {
             let newState =  state.favorites.filter(favoriteLocation => favoriteLocation.cityKey !== action.payload)
             state.favorites = newState
+        },
+
+        clearForcast:(state) =>{
+            state.forcast = []
         }
     }
     
 })
 
-export const {getForcast, addToFavorites,removeFromFavorites} = weatherSlice.actions
+export const {getForcast, addToFavorites,removeFromFavorites,clearForcast} = weatherSlice.actions
 
 export default weatherSlice.reducer

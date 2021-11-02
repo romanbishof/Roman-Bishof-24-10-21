@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 // import Forcast from '../forcast/Forcast';
 import axios from "axios"
-import { getForcast } from '../../redux/slice/weatherSlice';
-import { useDispatch} from 'react-redux'
+import { getForcast, clearForcast } from '../../redux/slice/weatherSlice';
+import { useDispatch, useSelector} from 'react-redux'
 import './searchBar.scss'
-const APIKEY = "jo0pzLr2RuHneFOPFHQWLKMSi8jQClAl"
+const APIKEY = "COnrzLNo7bwnOd1Cn9BBITwDuwthSGF7"
 
 
 const SearchBar = () => {
@@ -12,6 +12,9 @@ const SearchBar = () => {
     const [location, setLocation] = useState('');
     
     const dispatch = useDispatch()
+    
+    // const searchBar = useSelector((state) => state.weatherForcast)
+    const [searchBar, setSearchBar ] = useState('')
 
     const defaultCity = "tel-aviv"
     
@@ -78,7 +81,6 @@ const SearchBar = () => {
            
     }
         
-
     useEffect( () => {
         let temp =  localStorage.getItem("cityName")
         if (!temp) {
@@ -88,7 +90,7 @@ const SearchBar = () => {
             getWeatherByCity()
         }
         
-    },[dispatch])
+    },[])
 
 
     const onsubmit = (e) => {
@@ -97,9 +99,11 @@ const SearchBar = () => {
             return;
         }
         else{
+            dispatch(clearForcast())
             getWeatherByLocation(location)
         }
     }
+
 
     return (
         <div className="search">
@@ -107,7 +111,10 @@ const SearchBar = () => {
                 <input type="text" 
                 className="searchInput" 
                 placeholder="Search for location"
-                onChange={e=> setLocation(e.target.value)}/>
+                onChange={(e)=> {
+                    setLocation(e.target.value)
+                }} 
+                />
                 <button className="button" onClick={onsubmit}>SEARCH</button>
             </form>
         </div>
