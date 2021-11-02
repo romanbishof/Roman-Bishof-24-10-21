@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// import Forcast from '../forcast/Forcast';
 import axios from "axios"
 import { getForcast, clearForcast } from '../../redux/slice/weatherSlice';
 import { useDispatch, useSelector} from 'react-redux'
 import './searchBar.scss'
-const APIKEY = "COnrzLNo7bwnOd1Cn9BBITwDuwthSGF7"
+const APIKEY = "hdyjvdj6TlUnCcjQnLh785i4CpDZDWGE"
 
 
 const SearchBar = () => {
@@ -13,16 +12,15 @@ const SearchBar = () => {
     
     const dispatch = useDispatch()
     
-    // const searchBar = useSelector((state) => state.weatherForcast)
     const [searchBar, setSearchBar ] = useState('')
 
     const defaultCity = "tel-aviv"
     
     const getWeatherByLocation = async (location) => {
-        let response = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKEY}&q=${location}`)
+        let response = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKEY}&q=${location}`)
         let objArray = response.data
         objArray.forEach(async (obj) => {
-            let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=${APIKEY}`)
+            let res = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=${APIKEY}`)
             let weather = res.data
             let weatherData = {
                 special: false,
@@ -38,10 +36,10 @@ const SearchBar = () => {
 
     }
     const defaultFunc =async () =>{
-        let res = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKEY}&q=${defaultCity}`)
+        let res = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKEY}&q=${defaultCity}`)
     let defaultWeather = res.data
     defaultWeather.forEach(async (obj) => {
-        let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=${APIKEY}`)
+        let res = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=${APIKEY}`)
         let weather = res.data
         let weatherData = {
             special: false,
@@ -60,10 +58,10 @@ const SearchBar = () => {
 
     const getWeatherByCity = async () => {
         let cityName = localStorage.getItem('cityName')
-        let response = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKEY}&q=${cityName}`)
+        let response = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKEY}&q=${cityName}`)
         let objArray = response.data
         objArray.forEach(async (obj) => {
-            let res = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=${APIKEY}`)
+            let res = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj.Key}?apikey=${APIKEY}`)
             let weather = res.data
             let weatherData = {
                 special: true,
